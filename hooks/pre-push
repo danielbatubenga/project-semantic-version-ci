@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Lê a versão do arquivo local
+CURRENT_VERSION=$(cat VERSION)
+
+# Busca a versão remota
+REMOTE_VERSION=$(git fetch origin && git show origin/main:VERSION 2>/dev/null)  # Ajuste 'main' para a branch correta, se necessário
+
+# Verifica se a versão remota foi obtida
+if [ -z "$REMOTE_VERSION" ]; then
+    echo "Não foi possível obter a versão remota. Verifique a conexão com o repositório."
+    exit 1
+fi
+
+# Compara as versões
+if [ "${CURRENT_VERSION}" = "${REMOTE_VERSION}" ]; then
+    echo "A versão local é: ${CURRENT_VERSION}"
+    echo "A versão remota é: ${REMOTE_VERSION}"
+    echo "A versão no arquivo local é igual à versão no repositório. O commit não será realizado."
+    exit 1  # Impede o commit
+fi
+
+exit 0  # Permite o commit

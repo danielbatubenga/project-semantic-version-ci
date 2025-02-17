@@ -67,3 +67,5 @@ jobs:
         NEW_VERSION=$(python -c "import semantic_version; v = semantic_version.Version('$(cat VERSION)'); print(v.next_patch())")
         echo "${NEW_VERSION}" > VERSION
         echo "VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+
+####
