@@ -65,6 +65,8 @@ jobs:
 
     - name: Bump version
       run: |
-        # Exemplo para incrementar a versão
+        # Incrementa a versão em todas as branches
         pip install semantic-version
-        python -c "import semantic_version; new_version = semantic_version.Version('$(cat VERSION)').bump_patch(); print(new_version)" > VERSION
+        NEW_VERSION=$(python -c "import semantic_version; new_version = semantic_version.Version('$(cat VERSION)').bump_patch(); print(new_version)")
+        echo "${NEW_VERSION}" > VERSION
+        echo "VERSION=${NEW_VERSION}" >> $GITHUB_ENV
